@@ -22,13 +22,15 @@ def RandomizedSelection(A, p, r, i):
     if p == r:
         return A[p]
     q = RandomizedPartition(A, p, r)
-    k = q - p + 1
+    # k = q - p + 1
+    k = q+1
     if k == i:
         return A[q]
     elif i < k:
         return RandomizedSelection(A, p, q-1, i)
     else:
-        return RandomizedSelection(A, q+1, r, i-k)
+        # return RandomizedSelection(A, q+1, r, i-k)
+        return RandomizedSelection(A, q+1, r, i)
 
 def GetElement(A, i):
     if i < 1 or i > len(A):
@@ -36,6 +38,6 @@ def GetElement(A, i):
     else:
         return RandomizedSelection(A, 0, len(A)-1, i)
 
-A = [random.randint(-10,10) for _ in xrange(10)]
+A = random.sample(xrange(-30,30), 10)
 print A
 print GetElement(A, 5)

@@ -1,10 +1,10 @@
-def InsertionSort(elements):
-    for i in xrange(1, len(elements)):
+def InsertionSort(elements, start=0, end=None):
+    if end == None:
+        end = len(elements) - 1
+    for i in xrange(start+1, end+1):
         key = elements[i]
         j = i - 1
-        j_count = 0
-        while j >= 0 and elements[j] > key:
-            j_count += 1
+        while j >= start and elements[j] > key:
             elements[j+1] = elements[j]
             j -= 1
         elements[j+1] = key
