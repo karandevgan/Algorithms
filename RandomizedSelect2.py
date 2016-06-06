@@ -1,7 +1,7 @@
 import random
 import time
 import pdb
-
+from InsertionSort import InsertionSort
 
 def Partition(A, start, end, pivot_index):
     if pivot_index != end:
@@ -19,7 +19,7 @@ def Partition(A, start, end, pivot_index):
 
 def Select(A, smallest_index, start=0, end=None):
     # pdb.set_trace()
-    group_size = 20
+    group_size = 5
     if (end == None):
         end = len(A) - 1
     if (start == end):
@@ -27,28 +27,6 @@ def Select(A, smallest_index, start=0, end=None):
     if (len(A) <= group_size):
         A.sort()
         median_of_medians = A[len(A)/2]
-    # else:
-    #     groups = [A[i:i + group_size]
-    #               for i in xrange(start, end + 1, group_size)]
-    #     for group in groups:
-    #         group.sort()
-    #     medians = [group[len(group)/2] for group in groups]
-    #     if len(medians) <= 10:
-    #         medians.sort()
-    #         median_of_medians = medians[len(medians)/2]
-    #     else:
-    #         median_of_medians = Select(medians, len(medians)/2, 0, len(medians)-1)
-    #
-    # L1 = filter(lambda x: x < median_of_medians, A)
-    # k = len(L1) + 1
-    # if k == smallest_index:
-    #     return median_of_medians
-    # elif k > smallest_index:
-    #     return Select(L1, smallest_index)
-    # else:
-    #     L2 = filter(lambda x: x > median_of_medians, A)
-    #     return Select(L2, smallest_index - k)
-
     else:
         j = start
         group_end_index = 0
@@ -58,12 +36,14 @@ def Select(A, smallest_index, start=0, end=None):
             if group_end_index > end:
                 group_end_index = end
             A[i:group_end_index+1] = sorted(A[i:group_end_index+1])
+            #A = InsertionSort(A, i, group_end_index)
             median_index = (group_end_index+i)/2
             A[median_index], A[j] = A[j], A[median_index]
             j += 1
         j-=1
         if (j-start+1) <= 5:
             A[start:j+1] = sorted(A[start:j+1])
+            #A = InsertionSort(A, start, j)
             median_of_medians = A[(start+j)/2]
         else:
             median_of_medians = Select(A, (start+j)/2, start, j)
@@ -76,19 +56,20 @@ def Select(A, smallest_index, start=0, end=None):
     else:
         return Select(A, smallest_index, start, pivot_index-1)
 
-
-#A = [1,2,3,4,5,10,9,8,7,6,13,11,12]
-t1 = 0.0
-t2 = 0.0
-list_size = 100000
+random.seed(100)
+#A = [1,2,43,123,41,3,4,5,10,9,8,7,6,13,11,12]
+t1 = 0
+t2 = 0
+list_size = 300
 for i in xrange(10):
-    A = random.sample(xrange(10000000000), list_size)
+    A = random.sample(xrange(1000), list_size)
     start_time = time.time()
-    Select(A, 8)
+    print Select(A, 8)
     t1 += time.time() - start_time
-    A = random.sample(xrange(10000000000), list_size)
+    A = random.sample(xrange(long(1000)), list_size)
     start_time = time.time()
-    sorted(A)
+    A.sort()
+    print A[7]
     t2 += time.time() - start_time
 
 
