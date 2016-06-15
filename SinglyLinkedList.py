@@ -62,11 +62,15 @@ class SingleLinkedList:
             curr_node = curr_node.next
         return key_index
 
-    def reverse(self, index = 0):
-        if index == 0:
-            start_node = self.HEAD
+    def reverse(self, index = 0, node = None):
+        if node == None:
+            if index == 0:
+                start_node = self.HEAD
+            else:
+                start_node = self.get(index-1)
         else:
-            start_node = self.get(index-1)
+            start_node = node
+
         curr_node = start_node.next
         new_next = self.TAIL
         prev_node = None
@@ -94,8 +98,11 @@ if __name__ == '__main__':
     for i in xrange(10):
         ll.insert(i)
 
+    curr_node = ll.HEAD
+    print curr_node
+
     print ll
-    ll.reverse(9)
+    ll.reverse(node = curr_node)
     print ll
     #
     # print ll.delete(6)
