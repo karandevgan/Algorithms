@@ -1,14 +1,9 @@
-
 class Solution:
     # @param A : integer
     # @param B : integer
     # @param C : list of integers
     # @return an integer
-    class Solution:
-    # @param A : integer
-    # @param B : integer
-    # @param C : list of integers
-    # @return an integer
+
     def isPossible(self, C, max_length, num_of_painters):
         size = len(C)
         count = 1
@@ -32,14 +27,15 @@ class Solution:
                 high = mid
             else:
                 low = mid + 1
+
         return low
 
     def paint(self, A, B, C):
         partition = self.partition(A, C)
-        return int ((partition * B) % 10000003)
-
+        return int((partition * B) % 10000003)
+        
 sol = Solution()
 A = 3
 B = 5
-C = [i for i in xrange(1,11)]
-print sol.paint(A,B,C)
+C = [i for i in xrange(1, 11)]
+print sol.paint(A, B, C)
