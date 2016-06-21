@@ -16,12 +16,12 @@ class Solution:
         if n % 2 != 0 and x < 0:
             isPositive = False
 
-        square = abs(x)
+        num = abs(x)
 
         while (n != 0):
             if n % 2 != 0:
-                ans = ans*square
-            square = (square*square)%d
+                ans = ans*num
+            num = (num*num)%d
             n = n/2
             if (ans > d):
                 ans = ans % d
