@@ -3,72 +3,76 @@ class Solution:
     # @param B : tuple of integers
     # @return a double
 
+    def findMedianOfFour(self, numA1, numA2, numB1, numB2):
+        mid1 = max(numA1, numB1)
+        mid2 = min(numA2, numB2)
+        return (mid1 + mid2) / 2.0
+
+    def findMedianOfThree(self, numA1, numB1, numB2):
+        if numA1 >= numB1 and numA1 <= numB2:
+            return numA1
+        elif numA1 < numB1:
+            return numB1
+        else:
+            return numB2
+
+    def findMedianOfTwo(self, numA, numB):
+        return (numA + numB) / 2.0
+
+    def findMedianOfOneArray(self, Arr):
+        if len(Arr) % 2 == 0:
+            return (Arr[len(Arr) / 2] + Arr[len(Arr) / 2 - 1]) / 2.0
+        else:
+            return Arr[len(Arr) / 2]
+
     def findMedianSortedArrays(self, A, B):
-        if len(A) <= len(B):
-            return self.findMedian(A, 0, len(A) - 1, B, 0, len(B) - 1)
-        else:
-            return self.findMedian(B, 0, len(B) - 1, A, 0, len(A) - 1)
+        # import pdb
+        # pdb.set_trace()
+        if len(A) == 0:
+            return self.findMedianOfOneArray(B)
+        if len(B) == 0:
+            return self.findMedianOfOneArray(A)
 
-    def findMedian(self, A, lowA, highA, B, lowB, highB):
-        #import pdb; pdb.set_trace()
-        m = highA - lowA + 1
-        n = highB - lowB + 1
-        # m and n are lengths of A and B
-        # Assume m <= n
-        # No elements in A
-        if m == 0:
-            if n % 2 == 0:
-                return (B[lowB + n / 2] + B[lowB + n / 2 - 1]) / 2.0
-            else:
-                return B[lowB + n / 2]
+        # Assume that len(A) <= len(B)
+        # Swap the arrays if len(A) > len(B)
+        if len(A) > len(B):
+            A, B = B, A
 
-        # Only One element in A
-        if m == 1:
-            if n == 1:
-                return (A[lowA] + B[lowB]) / 2.0
-            if n % 2 == 0:
-                mid1 = B[lowB + n / 2 - 1]
-                mid2 = B[lowB + n / 2]
-                if A[lowA] > mid1 and A[lowA] < mid2:
-                    return A[lowA]
-                elif A[lowA] <= mid1:
-                    return mid1
+        if len(A) == 1:
+            if len(B) % 2 == 0:
+                return self.findMedianOfThree(A[0], B[len(B) / 2 - 1], B[len(B) / 2])
+            elif len(B) > 2:
+                medB = B[len(B) / 2]
+                if A[0] >= B[len(B) / 2 - 1] and A[0] <= B[len(B) / 2 + 1]:
+                    return self.findMedianOfTwo(A[0], medB)
+                elif A[0] < medB:
+                    return self.findMedianOfTwo(B[len(B) / 2 - 1], medB)
                 else:
-                    return mid2
+                    return self.findMedianOfTwo(medB, B[len(B) / 2 + 1])
             else:
-                mid1 = B[lowB + n / 2]
-                return (A[lowA] + mid1) / 2.0
+                return self.findMedianOfTwo(A[0], B[0])
 
-        # Two elements in A
-        if m == 2:
-            if n % 2 == 0:
-                mid1 = B[lowB + (n / 2 - 1)]
-                mid2 = B[lowB + (n / 2)]
-                if n == 2:
-                    left = max(A[lowA], mid1)
-                    right = min(A[highB], mid2)
-                else:
-                    left = max(A[lowA], B[lowB + (n / 2 - 2)])
-                    right = min(A[highA], B[lowB + (n / 2) + 1])
-                temp_list = sorted([left, right, mid1, mid2])
-                return (temp_list[1] + temp_list[2]) / 2.0
-            else:
-                mid1 = B[lowB + n / 2]
-                left = max(A[lowA], B[lowB + n / 2 - 1])
-                right = min(A[highA], B[lowB + n / 2 + 1])
-                temp_list = sorted([left, right, mid1])
-                return temp_list[1]
+        if len(A) == 2 and len(B) % 2 == 0:
+            if A[0] >= B[len(B) / 2 - 1] and A[1] <= B[len(B) / 2]:
+                return self.findMedianOfTwo(A[0], A[1])
+            elif A[0] < B[len(B) / 2 - 1] and A[1] > B[len(B) / 2]:
+                return self.findMedianOfTwo(B[len(B) / 2 - 1], B[len(B) / 2])
 
-        midA = (m-1) / 2
-        midB = (n-1) / 2
-        if A[midA] <= B[midB]:
-            return self.findMedian(A, midA, highA, B, lowB, highB - midA - 1)
+        medA = self.findMedianOfOneArray(A)
+        medB = self.findMedianOfOneArray(B)
+        if medA == medB:
+            return medA
+
+        maxDiscardable = len(A) / 2 - 1
+        if (len(A) % 2 != 0 or len(A) == 2):
+            maxDiscardable = len(A) / 2
+        if medA < medB:
+            return self.findMedianSortedArrays(A[maxDiscardable:], B[:len(B) - maxDiscardable])
         else:
-            return self.findMedian(A, lowA, midA, B, lowB + midA, highB)
+            return self.findMedianSortedArrays(A[:len(A) - maxDiscardable], B[maxDiscardable:])
 
-
-A = [1]
-B = [2,3,4,5,6]
+A = [19,43]
+B = [0, 4, 6, 18, 39, 42]
 
 sol = Solution()
 print sol.findMedianSortedArrays(A, B)
