@@ -12,6 +12,7 @@ def CutRod(length):
     for rod_length in range(1, length+1):
         optimised_cost = float("-inf")
         for sub_rod_length in range (1, rod_length+1):
+            print "Subrod1:", sub_rod_length, "Subrod2:", length - sub_rod_length
             optimised_cost = max(optimised_cost, price_per_length[sub_rod_length] + computed_lengths[rod_length - sub_rod_length])
         computed_lengths.append(optimised_cost)
     return computed_lengths[length]

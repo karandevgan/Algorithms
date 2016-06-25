@@ -19,4 +19,4 @@ class Solution:
         return return_string
 
 sol = Solution()
-print sol.convertToTitle(618751039)
+print sol.convertToTitle(1)
