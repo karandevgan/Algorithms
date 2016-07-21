@@ -39,28 +39,3 @@ class Solution:
             prev = next
             next = prev.next
         return head
-
-    def printList(self, A):
-        while A is not None:
-            print A.val
-            A = A.next
-node1 = ListNode(1)
-node2 = ListNode(2)
-node1.next = node2
-node3 = ListNode(2)
-node2.next = node3
-node4 = ListNode(2)
-node3.next = node4
-node5 = ListNode(3)
-node4.next = node5
-node6 = ListNode(3)
-node5.next = node6
-node7 = ListNode(4)
-node6.next = node7
-
-
-
-sol = Solution()
-# sol.printList(A)
-A = sol.deleteDuplicates(node1)
-sol.printList(A)
