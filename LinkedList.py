@@ -5,6 +5,7 @@ class ListNode:
 
 def getRandomNodes(n, top):
     import random
+    random.seed(10)
     nodes = []
     for i in xrange(n):
         node = ListNode(random.randint(0,top))
