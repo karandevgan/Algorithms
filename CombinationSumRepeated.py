@@ -21,10 +21,10 @@ class Solution:
                     l.append([A[i]] + item)
         if B in A:
             l.append([B])
-        l.sort()
+
         return l
 
 sol = Solution()
 A = [4,8,2,3,1,10,15]
-B = 8
+B = 12
 print sol.combinationSum(A, B)
