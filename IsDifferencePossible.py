@@ -4,11 +4,14 @@ class Solution:
     # @return an integer
     def diffPossible(self, A, B):
         d = {}
+        number_of_occurences = 0
         for index, integer in enumerate(A):
             number_of_occurences = d.get(integer, 0)
             number_of_occurences += 1
             d[integer] = number_of_occurences
 
+        
+        candidate = 0
         for integer in A:
             candidate = integer - B
             number_of_occurences = d.get(candidate, 0)
@@ -17,7 +20,7 @@ class Solution:
                 return 1
             elif candidate != integer and number_of_occurences > 0:
                 return 1
-                
+
         return 0
         
 
