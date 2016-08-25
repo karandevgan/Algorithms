@@ -28,7 +28,9 @@ class Solution:
             
             d[A[i]] = i
         
-        max_length_substring = max(max_length_substring, curr_length)
+        if max_length_substring < curr_length:
+            max_substring = curr_substring
+            max_length_substring = curr_length
         # print max_substring
         return max_length_substring
 
