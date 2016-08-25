@@ -6,20 +6,30 @@ class Solution:
             return len(A)
         d = {}
         d[A[0]] = 0
+        
         start_index = 0
         max_length_substring = 1
         curr_length = 1
+        
+        max_substring = A[0]
+        curr_substring = A[0]
+
         for i in xrange(1, len(A)):
             prev_index = d.get(A[i], -1)
             if prev_index == -1  or (start_index > prev_index):
                 curr_length += 1
             else:
-                max_length_substring = max(max_length_substring, curr_length)
+                curr_substring = A[start_index:i]
+                if max_length_substring < curr_length:
+                    max_substring = curr_substring
+                    max_length_substring = curr_length
                 start_index = prev_index + 1
                 curr_length = i - prev_index
+            
             d[A[i]] = i
         
         max_length_substring = max(max_length_substring, curr_length)
+        # print max_substring
         return max_length_substring
 
 sol = Solution()
